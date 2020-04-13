@@ -49,16 +49,6 @@ function HomePage() {
         onSubmit={onSubmit}
       />
 
-      <style jsx global>{`
-        body {
-          padding: 30px;
-        }
-        .ant-input-prefix {
-          opacity: 0.5;
-          margin-right: 6px;
-        }
-      `}</style>
-
       <style jsx>{`
         .app {
           max-width: 700px;

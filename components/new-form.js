@@ -5,7 +5,7 @@ import { Formik } from "formik"
 import { GlobalOutlined, UserOutlined, LockOutlined } from "@ant-design/icons"
 import * as Yup from "yup"
 
-const LoginSchema = Yup.object().shape({
+const NewPassSchema = Yup.object().shape({
   URL: Yup.string().required("Required"),
   Username: Yup.string().required("Required"),
   Password: Yup.string()
@@ -47,7 +47,7 @@ function NewForm({ visible, loading, onClose, onSubmit }) {
       <Formik
         innerRef={formRef}
         initialValues={{ URL: "", Username: "", Password: "" }}
-        validationSchema={LoginSchema}
+        validationSchema={NewPassSchema}
         onSubmit={onSubmit}
       >
         {() => (
