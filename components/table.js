@@ -58,6 +58,7 @@ function PassTable({ loading, data }) {
   return (
     <div>
       <Input
+        allowClear
         style={{ marginBottom: 20 }}
         placeholder="Search"
         value={searchText}
