@@ -1,10 +1,10 @@
 import * as React from "react"
-import { Table, Input } from "antd"
+import { Table, Input, Popconfirm, message } from "antd"
 import Highlighter from "react-highlight-words"
 
 import PasswordField from "./password-field"
 
-function PassTable({ loading, data }) {
+function PassTable({ loading, data, onDeletePass }) {
   const [searchText, setSearchText] = React.useState("")
   const [dataTable, setDataTable] = React.useState([])
 
@@ -31,10 +31,6 @@ function PassTable({ loading, data }) {
       ellipsis: true,
       sorter: (a, b) => a.URL.localeCompare(b.URL),
       sortDirections: ["descend", "ascend"],
-      render: (text) => {
-        console.log("render", text)
-        return text
-      },
       render: (text) => (
         <Highlighter
           highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
@@ -52,6 +48,20 @@ function PassTable({ loading, data }) {
       title: "Password",
       dataIndex: "Password",
       render: (text) => <PasswordField>{text}</PasswordField>
+    },
+    {
+      key: "action",
+      width: 80,
+      render: (text, record) => (
+        <Popconfirm
+          title="Are you sure delete this pass?"
+          onConfirm={() => onDeletePass(record.ID)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <a href="#">Delete</a>
+        </Popconfirm>
+      )
     }
   ]
 
