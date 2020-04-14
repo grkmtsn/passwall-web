@@ -1,5 +1,5 @@
 import * as React from "react"
-import useSWR, { mutate } from "swr"
+import useSWR from "swr"
 
 import fetch from "../libs/fetch"
 
@@ -40,7 +40,7 @@ function HomePage() {
       />
 
       <div className="app-table">
-        <PassTable loading={isValidating} data={pass ? pass.Data : []} />
+        <PassTable loading={isValidating} data={pass ? pass : []} />
       </div>
 
       <NewForm
