@@ -1,6 +1,6 @@
 import * as React from "react"
-import { Typography, Button, Space } from "antd"
-import { LockOutlined } from "@ant-design/icons"
+import { Typography, Button, Space, Tooltip } from "antd"
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons"
 
 const { Paragraph } = Typography
 
@@ -12,9 +12,11 @@ function PasswordField({ children }) {
       <Paragraph style={{ marginBottom: 0 }} copyable>
         {show ? children : "• • • • • • • •"}
       </Paragraph>
-      <Button type="link" onClick={() => setShow(!show)}>
-        <LockOutlined />
-      </Button>
+      <Tooltip title={show ? "Hide" : "Show"}>
+        <Button type="link" size="small" onClick={() => setShow(!show)}>
+          {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+        </Button>
+      </Tooltip>
     </Space>
   )
 }
