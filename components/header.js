@@ -9,7 +9,7 @@ function Header({ loading, onModalOpen = () => {}, onDataRefresh = () => {} }) {
     <header className="header">
       <Space>
         <Title style={{ marginBottom: 0 }} level={2}>
-          GPass
+          PassWall
         </Title>
 
         <Button
