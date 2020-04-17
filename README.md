@@ -1,4 +1,4 @@
-# gpass frontend
+# PassWall Web
 
 ### Development
 
@@ -12,4 +12,10 @@ npm run dev
 ```
 npm install
 npm run build && npm run start
+```
+
+### Docker
+
+```
+docker-compose up --build
 ```
