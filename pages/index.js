@@ -1,16 +1,24 @@
-import * as React from "react"
-import useSWR from "swr"
-import { message } from "antd"
+import * as React from 'react'
+import useSWR from 'swr'
+import { message } from 'antd'
 
-import fetch from "../libs/fetch"
+import fetch from '../libs/fetch'
 
-import NewForm from "../components/new-form"
-import Header from "../components/header"
-import PassTable from "../components/table"
+import NewForm from '../components/new-form'
+import Header from '../components/header'
+import PassTable from '../components/table'
 
 function HomePage() {
   const [showNewModal, setNewModal] = React.useState(false)
-  const { data: pass, isValidating, revalidate } = useSWR("/logins/", fetch)
+
+  const { data: passData, error, isValidating, revalidate } = useSWR("/logins/", fetch, {
+    initialData: []
+  })
+
+  React.useEffect(()=>{
+    if (!error) return
+    message.error(error)
+  },[error])
 
   const onModalClose = () => {
     setNewModal(false)
@@ -22,12 +30,13 @@ function HomePage() {
 
   const onCreatePass = async (values, actions) => {
     try {
-      await fetch("/logins/", { method: "POST", body: JSON.stringify(values) })
+      await fetch('/logins/', { method: 'POST', body: JSON.stringify(values) })
       setNewModal(false)
-      message.success("Password added")
+      message.success('Password added')
       revalidate()
     } catch (e) {
       console.log(e)
+      message.error(e.message)
     } finally {
       actions.setSubmitting(false)
     }
@@ -35,11 +44,12 @@ function HomePage() {
 
   const onDeletePass = async (id) => {
     try {
-      await fetch(`/logins/${id}`, { method: "DELETE" })
-      message.success("Password deleted")
+      await fetch(`/logins/${id}`, { method: 'DELETE' })
+      message.success('Password deleted')
       revalidate()
     } catch (e) {
       console.log(e)
+      message.error(e.message)
     }
   }
 
@@ -55,7 +65,7 @@ function HomePage() {
         <PassTable
           loading={isValidating}
           onDeletePass={onDeletePass}
-          data={pass ? pass : []}
+          data={passData}
         />
       </div>
 

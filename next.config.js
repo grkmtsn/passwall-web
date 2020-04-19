@@ -3,12 +3,11 @@ const {
     PHASE_PRODUCTION_BUILD,
 } = require('next/constants')
 
-const DEV_BASE_URL = 'http://localhost:3625'
+const DEV_BASE_URL = 'http://0.0.0.0:3625'
 const PROD_BASE_URL = 'https://passwall-server.herokuapp.com'
 
 
 module.exports = function (phase, {defaultConfig}) {
-    console.log(phase)
     const isDev = phase === PHASE_DEVELOPMENT_SERVER
     const isProd = phase === PHASE_PRODUCTION_BUILD && process.env.STAGING !== '1'
 
