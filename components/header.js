@@ -1,6 +1,6 @@
-import * as React from "react"
-import { Space, Button, Typography } from "antd"
-import { ReloadOutlined, PlusOutlined } from "@ant-design/icons"
+import * as React from 'react'
+import { Space, Button, Typography } from 'antd'
+import { ReloadOutlined, PlusOutlined } from '@ant-design/icons'
 
 const { Title } = Typography
 
