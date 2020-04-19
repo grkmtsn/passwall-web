@@ -4,7 +4,7 @@ const {
 } = require('next/constants')
 
 const DEV_BASE_URL = 'http://localhost:3625'
-const PROD_BASE_URL = 'https://passwall-api.herokuapp.com'
+const PROD_BASE_URL = 'https://passwall-server.herokuapp.com'
 
 
 module.exports = function (phase, {defaultConfig}) {
