@@ -10,7 +10,15 @@ import PassTable from '../components/table'
 
 function HomePage() {
   const [showNewModal, setNewModal] = React.useState(false)
-  const { data: pass, isValidating, revalidate } = useSWR('/logins/', fetch)
+
+  const { data: passData, error, isValidating, revalidate } = useSWR("/logins/", fetch, {
+    initialData: []
+  })
+
+  React.useEffect(()=>{
+    if (!error) return
+    message.error(error)
+  },[error])
 
   const onModalClose = () => {
     setNewModal(false)
@@ -28,6 +36,7 @@ function HomePage() {
       revalidate()
     } catch (e) {
       console.log(e)
+      message.error(e.message)
     } finally {
       actions.setSubmitting(false)
     }
@@ -40,6 +49,7 @@ function HomePage() {
       revalidate()
     } catch (e) {
       console.log(e)
+      message.error(e.message)
     }
   }
 
@@ -55,7 +65,7 @@ function HomePage() {
         <PassTable
           loading={isValidating}
           onDeletePass={onDeletePass}
-          data={pass ? pass : []}
+          data={passData}
         />
       </div>
 
