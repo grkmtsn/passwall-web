@@ -10,14 +10,16 @@ import fetch from '../libs/fetch'
 const LoginSchema = Yup.object().shape({
   Username: Yup.string().required('Required'),
   Password: Yup.string().required('Required'),
+  BaseURL: Yup.string().url().required('Required')
 })
 
 function LoginPage() {
   const onSubmit = async (values, actions) => {
     try {
+      localStorage.setItem('BASE_URL', values.BaseURL)
       const { token } = await fetch('/auth/signin', {
         method: 'POST',
-        body: JSON.stringify(values),
+        body: JSON.stringify(values)
       })
       localStorage.setItem('TOKEN', token)
       Router.push('/')
@@ -33,23 +35,24 @@ function LoginPage() {
       name: 'BaseURL',
       required: true,
       placeholder: process.env.BASE_URL,
-      prefix: <GlobalOutlined />,
+      prefix: <GlobalOutlined />
     },
     {
       label: 'Username',
       name: 'Username',
       required: true,
       placeholder: 'Username',
-      prefix: <UserOutlined />,
+      prefix: <UserOutlined />
     },
     {
       label: 'Password',
       name: 'Password',
       required: true,
       placeholder: 'Password',
-      prefix: <LockOutlined />,
-    },
+      prefix: <LockOutlined />
+    }
   ]
+
   const FormItems = () => {
     return FormItemList.map(
       ({ label, required, name, placeholder, prefix }) => (
@@ -66,7 +69,7 @@ function LoginPage() {
         initialValues={{
           Username: '',
           Password: '',
-          BaseURL: process.env.BASE_URL,
+          BaseURL: process.env.BASE_URL
         }}
         validationSchema={LoginSchema}
         onSubmit={onSubmit}
