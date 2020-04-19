@@ -17,7 +17,7 @@ function HomePage() {
 
   React.useEffect(()=>{
     if (!error) return
-    message.error(error)
+    message.error(error.message)
   },[error])
 
   const onModalClose = () => {
@@ -32,11 +32,10 @@ function HomePage() {
     try {
       await fetch('/logins/', { method: 'POST', body: JSON.stringify(values) })
       setNewModal(false)
-      message.success('Password added')
+      message.success('Login added successfully!')
       revalidate()
-    } catch (e) {
-      console.log(e)
-      message.error(e.message)
+    } catch (error) {
+      message.error(error.message)
     } finally {
       actions.setSubmitting(false)
     }
@@ -44,12 +43,11 @@ function HomePage() {
 
   const onDeletePass = async (id) => {
     try {
-      await fetch(`/logins/${id}`, { method: 'DELETE' })
-      message.success('Password deleted')
+      const response = await fetch(`/logins/${id}`, { method: 'DELETE' })
+      message.success(response.Message)
       revalidate()
-    } catch (e) {
-      console.log(e)
-      message.error(e.message)
+    } catch (error) {
+      message.error(error.message)
     }
   }
 

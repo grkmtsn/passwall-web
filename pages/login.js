@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Typography } from 'antd'
+import { Typography, Alert } from 'antd'
 import { Form, FormItem, Input, SubmitButton } from 'formik-antd'
 import { Formik } from 'formik'
 import { UserOutlined, LockOutlined, GlobalOutlined } from '@ant-design/icons'
@@ -17,6 +17,7 @@ const LoginSchema = Yup.object().shape({
 })
 
 function LoginPage() {
+  const [errorMessage, setErrorMessage] = React.useState("");
   const onSubmit = async (values, actions) => {
     try {
       localStorage.setItem('BASE_URL', values.BaseURL)
@@ -27,7 +28,7 @@ function LoginPage() {
       localStorage.setItem('TOKEN', token)
       Router.push('/')
     } catch (e) {
-      console.log(e)
+      setErrorMessage(e.message)
     } finally {
       actions.setSubmitting(false)
     }
@@ -38,29 +39,32 @@ function LoginPage() {
       name: 'BaseURL',
       required: true,
       placeholder: process.env.BASE_URL,
-      prefix: <GlobalOutlined />
+      prefix: <GlobalOutlined />,
+      type: "text"
     },
     {
       label: 'Username',
       name: 'Username',
       required: true,
       placeholder: 'Username',
-      prefix: <UserOutlined />
+      prefix: <UserOutlined />,
+      type: "text"
     },
     {
       label: 'Password',
       name: 'Password',
       required: true,
       placeholder: 'Password',
-      prefix: <LockOutlined />
+      prefix: <LockOutlined />,
+      type: "password",
     }
   ]
 
   const FormItems = () => {
     return FormItemList.map(
-      ({ label, required, name, placeholder, prefix }) => (
+      ({ label, required, name, placeholder, prefix, type }) => (
         <FormItem label={label} name={name} required={required} key={name}>
-          <Input name={name} placeholder={placeholder} prefix={prefix} />
+          <Input name={name} placeholder={placeholder} prefix={prefix} type={type}/>
         </FormItem>
       )
     )
@@ -88,6 +92,7 @@ function LoginPage() {
             {() => (
               <Form layout="vertical">
                 <FormItems />
+                {errorMessage && <Alert style={{marginBottom: 15}} showIcon message={errorMessage} type="error"/>}
                 <div className="cta">
                   <SubmitButton className="btn-submit">Login</SubmitButton>
                 </div>
