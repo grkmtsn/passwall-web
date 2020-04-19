@@ -1,15 +1,16 @@
-import * as React from "react"
-import useSWR from "swr"
-import { message } from "antd"
+import * as React from 'react'
+import useSWR from 'swr'
+import { message } from 'antd'
 
-import fetch from "../libs/fetch"
+import fetch from '../libs/fetch'
 
-import NewForm from "../components/new-form"
-import Header from "../components/header"
-import PassTable from "../components/table"
+import NewForm from '../components/new-form'
+import Header from '../components/header'
+import PassTable from '../components/table'
 
 function HomePage() {
   const [showNewModal, setNewModal] = React.useState(false)
+
   const { data: passData, error, isValidating, revalidate } = useSWR("/logins/", fetch, {
     initialData: []
   })
@@ -29,9 +30,9 @@ function HomePage() {
 
   const onCreatePass = async (values, actions) => {
     try {
-      await fetch("/logins/", { method: "POST", body: JSON.stringify(values) })
+      await fetch('/logins/', { method: 'POST', body: JSON.stringify(values) })
       setNewModal(false)
-      message.success("Password added")
+      message.success('Password added')
       revalidate()
     } catch (e) {
       console.log(e)
@@ -43,8 +44,8 @@ function HomePage() {
 
   const onDeletePass = async (id) => {
     try {
-      await fetch(`/logins/${id}`, { method: "DELETE" })
-      message.success("Password deleted")
+      await fetch(`/logins/${id}`, { method: 'DELETE' })
+      message.success('Password deleted')
       revalidate()
     } catch (e) {
       console.log(e)
